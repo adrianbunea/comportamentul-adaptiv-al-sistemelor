@@ -30,7 +30,6 @@
         {
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
             this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
             this.SuspendLayout();
@@ -89,7 +88,6 @@
             series1.Color = System.Drawing.Color.Red;
             series1.CustomProperties = "IsXAxisQuantitative=True";
             series1.Name = "Series1";
-            series1.Points.Add(dataPoint1);
             this.chart.Series.Add(series1);
             this.chart.Size = new System.Drawing.Size(984, 961);
             this.chart.TabIndex = 0;

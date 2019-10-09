@@ -12,9 +12,20 @@ namespace TestDataGeneration
 {
     public partial class Form1 : Form
     {
+        private DataSet[] dataSets = new DataSet[5]
+        {
+            new DataSet(),
+            new DataSet(),
+            new DataSet(),
+            new DataSet(),
+            new DataSet()
+        };
+
         public Form1()
         {
             InitializeComponent();
+
+            chart.Series["Series1"].Points.DataBind(dataSets[0].points, "X", "Y", null);
         }
     }
 }
