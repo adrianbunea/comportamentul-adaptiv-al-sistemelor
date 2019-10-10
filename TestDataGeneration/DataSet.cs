@@ -9,7 +9,7 @@ namespace TestDataGeneration
 {
     class DataSet
     {
-        Random random = new Random();
+        readonly Random random = new Random();
         readonly int minX = -400, minY = -400, maxX = 400, maxY = 400;
         private Point center;
         private Point dispersion;
@@ -19,23 +19,23 @@ namespace TestDataGeneration
         {
             center = mean;
             this.dispersion = dispersion;
-            points = generateRandomPoints();
+            points = GenerateRandomPoints();
         }
 
-        List<Point> generateRandomPoints()
+        List<Point> GenerateRandomPoints()
         {
             List<Point> points = new List<Point>();
             for (int i = 0; i < 1000; i++)
             {
-                int x = generateX();
-                int y = generateY();
+                int x = GenerateX();
+                int y = GenerateY();
                 points.Add(new Point(x, y));
             }
 
             return points;
         }
 
-        int generateX()
+        int GenerateX()
         {
             int x;
             while (true)
@@ -49,7 +49,7 @@ namespace TestDataGeneration
             return x;
         }
 
-        int generateY()
+        int GenerateY()
         {
             int y;
             while (true)

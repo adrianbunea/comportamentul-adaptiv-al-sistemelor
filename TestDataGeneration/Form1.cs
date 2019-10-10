@@ -13,7 +13,7 @@ namespace TestDataGeneration
 {
     public partial class Form1 : Form
     {
-        private DataSet[] dataSets = new DataSet[3]
+        private readonly DataSet[] dataSets = new DataSet[3]
         {
             new DataSet(new Point(100,-250), new Point(40,40)),
             new DataSet(new Point(180,280), new Point(40,40)),
