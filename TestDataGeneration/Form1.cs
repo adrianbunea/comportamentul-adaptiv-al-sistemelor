@@ -15,9 +15,9 @@ namespace TestDataGeneration
     {
         private DataSet[] dataSets = new DataSet[3]
         {
-            new DataSet(0, 50),
-            new DataSet(240, 50),
-            new DataSet(-290, 50)
+            new DataSet(new Point(100,-250), new Point(40,40)),
+            new DataSet(new Point(180,280), new Point(40,40)),
+            new DataSet(new Point(-60,180), new Point(40,40))
         };
 
         public Form1()
@@ -31,7 +31,7 @@ namespace TestDataGeneration
                 series.Points.DataBind(dataSet.points, "X", "Y", null);
                 series.ChartType = SeriesChartType.Point;
                 series.BorderColor = Color.Transparent;
-                series.MarkerSize = 5;
+                series.MarkerSize = 3;
                 series.CustomProperties = "IsXAxisQuantitative=True";
 
                 chart.Series.Add(series);

@@ -15,10 +15,10 @@ namespace TestDataGeneration
         private Point dispersion;
         public List<Point> points;
 
-        public DataSet(double mean, double dispersion)
+        public DataSet(Point mean, Point dispersion)
         {
-            center = new Point((int)mean, (int)mean);
-            this.dispersion = new Point((int)dispersion, (int)dispersion);
+            center = mean;
+            this.dispersion = dispersion;
             points = generateRandomPoints();
         }
 
