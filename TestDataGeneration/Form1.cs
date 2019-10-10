@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,6 +36,36 @@ namespace TestDataGeneration
                 series.CustomProperties = "IsXAxisQuantitative=True";
 
                 chart.Series.Add(series);
+            }
+        }
+
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "*(*.txt)|*.txt",
+                Title = "Save points as a text file"
+            };
+            saveFileDialog.ShowDialog();
+
+            if (saveFileDialog.FileName != "")
+            {
+                StreamWriter sw = new StreamWriter(saveFileDialog.OpenFile());
+
+                switch (saveFileDialog.FilterIndex)
+                {
+                    case 1:
+                        foreach(DataSet dataSet in dataSets)
+                        {
+                            foreach(Point point in dataSet.points)
+                            {
+                                sw.WriteLine("{0},{1}", point.X, point.Y);
+                            }
+                        }
+                        break;
+                }
+
+                sw.Close();
             }
         }
     }
