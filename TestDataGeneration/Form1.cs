@@ -8,31 +8,20 @@ namespace TestDataGeneration
 {
     public partial class Form1 : Form
     {
-        private readonly DataSet[] dataSets = new DataSet[3]
-        {
-            new DataSet(new Point(100,-250), new Point(40,40)),
-            new DataSet(new Point(180,280), new Point(40,40)),
-            new DataSet(new Point(-60,180), new Point(40,40))
-        };
+        private DataSet[] dataSets;
 
         public Form1()
         {
             InitializeComponent();
 
-            chart.Series.Clear();
-            foreach(DataSet dataSet in dataSets)
+            dataSets = new DataSet[3]
             {
-                Series series = new Series()
-                {
-                    ChartType = SeriesChartType.Point,
-                    BorderColor = Color.Transparent,
-                    MarkerSize = 3,
-                    CustomProperties = "IsXAxisQuantitative=True"
-                };
+                new DataSet(new Point(100,-250), new Point(40,40)),
+                new DataSet(new Point(180,280), new Point(40,40)),
+                new DataSet(new Point(-60,180), new Point(40,40))
+            };
 
-                series.Points.DataBind(dataSet.points, "X", "Y", null);
-                chart.Series.Add(series);
-            }
+            RedrawChart();
         }
 
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -65,6 +54,35 @@ namespace TestDataGeneration
             }
 
             saveFileDialog.Dispose();
+        }
+
+        private void generateSetsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dataSets = new DataSet[3]
+            {
+                new DataSet(new Point(0,0), new Point(40,40)),
+                new DataSet(new Point(0,0), new Point(40,40)),
+                new DataSet(new Point(0,0), new Point(40,40))
+            };
+            RedrawChart();
+        }
+
+        private void RedrawChart()
+        {
+            chart.Series.Clear();
+            foreach (DataSet dataSet in dataSets)
+            {
+                Series series = new Series()
+                {
+                    ChartType = SeriesChartType.Point,
+                    BorderColor = Color.Transparent,
+                    MarkerSize = 3,
+                    CustomProperties = "IsXAxisQuantitative=True"
+                };
+
+                series.Points.DataBind(dataSet.points, "X", "Y", null);
+                chart.Series.Add(series);
+            }
         }
     }
 }
