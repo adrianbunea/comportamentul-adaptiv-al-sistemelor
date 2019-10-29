@@ -46,7 +46,7 @@ namespace TestDataGeneration
             {
                 x = random.Next(minX, maxX);
                 double gauss = Gauss(x, center.X, dispersion.X);
-                double odds = random.NextDouble();
+                double odds = random.Next(0, 1000) / 1000.0;
                 if (odds < gauss) break;
             }
             
@@ -60,7 +60,7 @@ namespace TestDataGeneration
             {
                 y = random.Next(minY, maxY);
                 double gauss = Gauss(y, center.Y, dispersion.Y);
-                double odds = random.NextDouble();
+                double odds = random.Next(0, 1000)/1000.0;
                 if (odds < gauss) break;
             }
 
