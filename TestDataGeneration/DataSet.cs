@@ -6,15 +6,17 @@ namespace TestDataGeneration
 {
     class DataSet
     {
-        readonly Random random = new Random();
+        static readonly Random random = new Random();
         readonly int minX = -400, minY = -400, maxX = 400, maxY = 400;
         private Point center;
         private Point dispersion;
         public List<Point> points;
 
-        public DataSet(Point mean, Point dispersion)
+        public DataSet(Point dispersion)
         {
-            center = mean;
+            int x = random.Next(minX + 100, maxX - 100);
+            int y = random.Next(minY + 100, maxY - 100);
+            center = new Point(x, y);
             this.dispersion = dispersion;
             points = GenerateRandomPoints();
         }
@@ -24,12 +26,17 @@ namespace TestDataGeneration
             List<Point> points = new List<Point>();
             for (int i = 0; i < 1000; i++)
             {
-                int x = GenerateX();
-                int y = GenerateY();
-                points.Add(new Point(x, y));
+                points.Add(GenerateRandomPoint());
             }
 
             return points;
+        }
+
+        Point GenerateRandomPoint()
+        {
+            int x = GenerateX();
+            int y = GenerateY();
+            return new Point(x, y);
         }
 
         int GenerateX()

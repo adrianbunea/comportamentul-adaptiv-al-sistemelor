@@ -16,9 +16,9 @@ namespace TestDataGeneration
 
             dataSets = new DataSet[3]
             {
-                new DataSet(new Point(100,-250), new Point(40,40)),
-                new DataSet(new Point(180,280), new Point(40,40)),
-                new DataSet(new Point(-60,180), new Point(40,40))
+                new DataSet(new Point(40,40)),
+                new DataSet(new Point(40,40)),
+                new DataSet(new Point(40,40))
             };
 
             RedrawChart();
@@ -60,9 +60,9 @@ namespace TestDataGeneration
         {
             dataSets = new DataSet[3]
             {
-                new DataSet(new Point(0,0), new Point(40,40)),
-                new DataSet(new Point(0,0), new Point(40,40)),
-                new DataSet(new Point(0,0), new Point(40,40))
+                new DataSet(new Point(40,40)),
+                new DataSet(new Point(40,40)),
+                new DataSet(new Point(40,40))
             };
             RedrawChart();
         }
