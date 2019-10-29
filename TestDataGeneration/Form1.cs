@@ -3,18 +3,19 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Collections.Generic;
 
 namespace TestDataGeneration
 {
     public partial class Form1 : Form
     {
-        private DataSet[] dataSets;
+        private List<DataSet> dataSets;
 
         public Form1()
         {
             InitializeComponent();
 
-            dataSets = new DataSet[3]
+            dataSets = new List<DataSet>
             {
                 new DataSet(new Point(40,40)),
                 new DataSet(new Point(40,40)),
@@ -40,11 +41,18 @@ namespace TestDataGeneration
                 switch (saveFileDialog.FilterIndex)
                 {
                     case 1:
-                        foreach(DataSet dataSet in dataSets)
+                        Random random = new Random();
+                        int totalPointCount = dataSets.Count*1000;
+                        for (int i = 0; i < totalPointCount; i++)
                         {
-                            foreach(Point point in dataSet.points)
+                            int index = random.Next(0, dataSets.Count);
+                            Point point = dataSets[index].points[0];
+                            dataSets[index].points.RemoveAt(0);
+                            sw.WriteLine("{0}: {1},{2}", index, point.X, point.Y);
+
+                            if (dataSets[index].points.Count == 0)
                             {
-                                sw.WriteLine("{0},{1}", point.X, point.Y);
+                                dataSets.RemoveAt(index);
                             }
                         }
                         break;
@@ -58,7 +66,7 @@ namespace TestDataGeneration
 
         private void generateSetsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            dataSets = new DataSet[3]
+            dataSets = new List<DataSet>
             {
                 new DataSet(new Point(40,40)),
                 new DataSet(new Point(40,40)),
