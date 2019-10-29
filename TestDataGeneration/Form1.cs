@@ -22,13 +22,15 @@ namespace TestDataGeneration
             chart.Series.Clear();
             foreach(DataSet dataSet in dataSets)
             {
-                Series series = new Series();
-                series.Points.DataBind(dataSet.points, "X", "Y", null);
-                series.ChartType = SeriesChartType.Point;
-                series.BorderColor = Color.Transparent;
-                series.MarkerSize = 3;
-                series.CustomProperties = "IsXAxisQuantitative=True";
+                Series series = new Series()
+                {
+                    ChartType = SeriesChartType.Point,
+                    BorderColor = Color.Transparent,
+                    MarkerSize = 3,
+                    CustomProperties = "IsXAxisQuantitative=True"
+                };
 
+                series.Points.DataBind(dataSet.points, "X", "Y", null);
                 chart.Series.Add(series);
             }
         }
@@ -61,6 +63,8 @@ namespace TestDataGeneration
 
                 sw.Close();
             }
+
+            saveFileDialog.Dispose();
         }
     }
 }
