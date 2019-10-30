@@ -11,6 +11,7 @@ namespace TestDataGeneration
     {
         private List<DataSet> dataSets;
         private List<Point> points;
+        private List<Centroid> centroids;
 
         public Form1()
         {
@@ -24,7 +25,10 @@ namespace TestDataGeneration
                 new DataSet(new Point(40,40))
             };
 
-            RedrawChart();
+            foreach (DataSet dataSet in dataSets)
+            {
+                chart.Series.Add(CreateSeries(dataSet.points));
+            }
         }
 
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -75,35 +79,10 @@ namespace TestDataGeneration
                 new DataSet(new Point(40,40)),
                 new DataSet(new Point(40,40))
             };
-            RedrawChart();
-        }
-
-        private void RedrawChart()
-        {
-            chart.Series.Clear();
-            Series series = new Series()
-            {
-                ChartType = SeriesChartType.Point,
-                BorderColor = Color.Transparent,
-                MarkerSize = 3,
-                CustomProperties = "IsXAxisQuantitative=True"
-            };
-
-            series.Points.DataBind(points, "X", "Y", null);
-            chart.Series.Add(series);
 
             foreach (DataSet dataSet in dataSets)
             {
-                series = new Series()
-                {
-                    ChartType = SeriesChartType.Point,
-                    BorderColor = Color.Transparent,
-                    MarkerSize = 3,
-                    CustomProperties = "IsXAxisQuantitative=True"
-                };
-
-                series.Points.DataBind(dataSet.points, "X", "Y", null);
-                chart.Series.Add(series);
+                chart.Series.Add(CreateSeries(dataSet.points));
             }
         }
 
@@ -137,7 +116,7 @@ namespace TestDataGeneration
                             dataSets.Clear();
                             chart.Series.Clear();
                         }
-                        RedrawChart();
+                        chart.Series.Add(CreateSeries(points));
                         break;
                 }
 
@@ -145,6 +124,43 @@ namespace TestDataGeneration
             }
 
             openFileDialog.Dispose();
+        }
+
+        private void stepToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void generateCentroidsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //chart.Series.Clear();
+            Random random = new Random();
+            centroids = new List<Centroid>();
+            int numberOfCentroids = random.Next(2, 11);
+            for (int i = 0; i < numberOfCentroids; i++)
+            {
+                centroids.Add(new Centroid());
+                Series series = CreateSeries(new List<Point> { centroids[i].Coordinate });
+                series.Color = centroids[i].color;
+                series.MarkerSize = 30;
+                chart.Series.Add(series);
+            }
+
+        }
+
+        private Series CreateSeries(List<Point> points)
+        {
+            Series series = new Series()
+            {
+                ChartType = SeriesChartType.Point,
+                BorderColor = Color.Transparent,
+                MarkerSize = 3,
+                CustomProperties = "IsXAxisQuantitative=True"
+            };
+
+            series.Points.DataBind(points, "X", "Y", null);
+
+            return series;
         }
     }
 }

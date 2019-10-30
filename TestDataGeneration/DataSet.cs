@@ -7,15 +7,14 @@ namespace TestDataGeneration
     class DataSet
     {
         static readonly Random random = new Random();
-        readonly int minX = -400, minY = -400, maxX = 400, maxY = 400;
         private Point center;
         private Point dispersion;
         public List<Point> points;
 
         public DataSet(Point dispersion)
         {
-            int x = random.Next(minX + 100, maxX - 100);
-            int y = random.Next(minY + 100, maxY - 100);
+            int x = random.Next(Constants.minX + 100, Constants.maxX - 100);
+            int y = random.Next(Constants.minY + 100, Constants.maxY - 100);
             center = new Point(x, y);
             this.dispersion = dispersion;
             points = GenerateRandomPoints();
@@ -44,7 +43,7 @@ namespace TestDataGeneration
             int x;
             while (true)
             {
-                x = random.Next(minX, maxX);
+                x = random.Next(Constants.minX, Constants.maxX);
                 double gauss = Gauss(x, center.X, dispersion.X);
                 double odds = random.Next(0, 1000) / 1000.0;
                 if (odds < gauss) break;
@@ -58,7 +57,7 @@ namespace TestDataGeneration
             int y;
             while (true)
             {
-                y = random.Next(minY, maxY);
+                y = random.Next(Constants.minY, Constants.maxY);
                 double gauss = Gauss(y, center.Y, dispersion.Y);
                 double odds = random.Next(0, 1000)/1000.0;
                 if (odds < gauss) break;
