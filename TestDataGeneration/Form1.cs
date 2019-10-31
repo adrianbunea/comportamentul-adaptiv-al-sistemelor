@@ -102,6 +102,8 @@ namespace TestDataGeneration
                 switch (openFileDialog.FilterIndex)
                 {
                     case 1:
+                        dataSets.Clear();
+                        chart.Series.Clear();
                         points = new List<Point>();
                         string line;
                         while ((line = sr.ReadLine()) != null)
@@ -112,9 +114,6 @@ namespace TestDataGeneration
                             int x = Int32.Parse(splitLine[2]);
                             int y = Int32.Parse(splitLine[3]);
                             points.Add(new Point(x, y));
-
-                            dataSets.Clear();
-                            chart.Series.Clear();
                         }
                         chart.Series.Add(CreateSeries(points));
                         break;
@@ -128,12 +127,47 @@ namespace TestDataGeneration
 
         private void stepToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+            foreach(Centroid centroid in centroids)
+            {
+                centroid.points.Clear();
+            }
+
+            SimilarityCalculator.DistanceCalculationAlgorithm algorithm = SimilarityCalculator.EuclideanDistance;
+            for (int i = 0; i < points.Count; i++)
+            {
+                double minimumSimilarity = Int32.MaxValue;
+                int centroidIndex = -1;
+                for (int j = 0; j < centroids.Count; j++)
+                {
+                    double similarity = points[i].SimilarityTo(centroids[j].Coordinate, algorithm);
+                    if (similarity < minimumSimilarity)
+                    {
+                        minimumSimilarity = similarity;
+                        centroidIndex = j;
+                    }
+                }
+
+                centroids[centroidIndex].points.Add(points[i]);
+            }
+
+            chart.Series.Clear();
+
+            foreach (Centroid centroid in centroids)
+            {
+                centroid.RecalculateCoordinate();
+                Series series = CreateSeries(new List<Point> { centroid.Coordinate });
+                series.MarkerSize = 30;
+                series.Color = centroid.color;
+                chart.Series.Add(series);
+
+                series = CreateSeries(centroid.points);
+                series.Color = Color.FromArgb(127, centroid.color);
+                chart.Series.Add(series);
+            }
         }
 
         private void generateCentroidsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //chart.Series.Clear();
             Random random = new Random();
             centroids = new List<Centroid>();
             int numberOfCentroids = random.Next(2, 11);

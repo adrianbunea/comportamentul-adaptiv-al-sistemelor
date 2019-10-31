@@ -27,7 +27,7 @@ namespace TestDataGeneration
         private static int colorIndex = 0;
 
         public Point Coordinate { get; set; }
-        private List<Point> points;
+        public List<Point> points;
         public Color color;
 
         public Centroid()
@@ -37,6 +37,22 @@ namespace TestDataGeneration
             int x = random.Next(Constants.minX + 100, Constants.maxX - 100);
             int y = random.Next(Constants.minY + 100, Constants.maxY - 100);
             Coordinate = new Point(x, y);
+        }
+
+        public void RecalculateCoordinate()
+        {
+            int numberOfPoints = points.Count();
+            if (numberOfPoints == 0) return;
+            int xTotal = 0;
+            int yTotal = 0;
+            
+            for (int i = 0; i < numberOfPoints; i++)
+            {
+                xTotal += points[i].X;
+                yTotal += points[i].Y;
+            }
+
+            Coordinate = new Point(xTotal / numberOfPoints, yTotal / numberOfPoints);
         }
     }
 }
