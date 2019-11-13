@@ -12,6 +12,7 @@ namespace TestDataGeneration
         private List<DataSet> dataSets;
         private List<Point> points;
         private List<Centroid> centroids;
+        private List<List<Point>>neurons;
 
         public Form1()
         {
@@ -182,11 +183,60 @@ namespace TestDataGeneration
 
         }
 
+        private void generateNeuronsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            neurons = new List<List<Point>>();
+            chart.Series.Clear();
+            Point[,] points = new Point[10, 10];
+            for (int x = -5; x < 5; x++)
+            {
+                for (int y = -5; y < 5; y++)
+                {
+                    Point point = new Point(x * 60, y * 60);
+                    points[x + 5, y + 5] = point;
+                }
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                List<Point> neuronLineX = new List<Point>();
+                List<Point> neuronLineY = new List<Point>();
+                for (int j = 0; j < 10; j++)
+                {
+                    neuronLineY.Add(points[i, j]);
+                    neuronLineX.Add(points[j, i]);
+                }
+
+                neurons.Add(neuronLineX);
+                neurons.Add(neuronLineY);
+                Series seriesX = CreateLineSeries(neuronLineX);
+                Series seriesY = CreateLineSeries(neuronLineY);
+                chart.Series.Add(seriesX);
+                chart.Series.Add(seriesY);
+            }
+        }
+
         private Series CreateSeries(List<Point> points)
         {
             Series series = new Series()
             {
                 ChartType = SeriesChartType.Point,
+                BorderColor = Color.Transparent,
+                MarkerSize = 3,
+                CustomProperties = "IsXAxisQuantitative=True"
+            };
+
+            series.Points.DataBind(points, "X", "Y", null);
+
+            return series;
+        }
+
+        private  Series CreateLineSeries(List<Point> points)
+        {
+            Series series = new Series()
+            {
+                ChartType = SeriesChartType.Line,
+                Color = Color.Black,
                 BorderColor = Color.Transparent,
                 MarkerSize = 3,
                 CustomProperties = "IsXAxisQuantitative=True"
