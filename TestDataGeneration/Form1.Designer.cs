@@ -42,6 +42,7 @@
             this.stepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kohonensToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.generateNeuronsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stepToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -182,7 +183,8 @@
             // kohonensToolStripMenuItem
             // 
             this.kohonensToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.generateNeuronsToolStripMenuItem});
+            this.generateNeuronsToolStripMenuItem,
+            this.stepToolStripMenuItem1});
             this.kohonensToolStripMenuItem.Name = "kohonensToolStripMenuItem";
             this.kohonensToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
             this.kohonensToolStripMenuItem.Text = "Kohonens";
@@ -193,6 +195,13 @@
             this.generateNeuronsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.generateNeuronsToolStripMenuItem.Text = "Generate Neurons";
             this.generateNeuronsToolStripMenuItem.Click += new System.EventHandler(this.generateNeuronsToolStripMenuItem_Click);
+            // 
+            // stepToolStripMenuItem1
+            // 
+            this.stepToolStripMenuItem1.Name = "stepToolStripMenuItem1";
+            this.stepToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.stepToolStripMenuItem1.Text = "Step";
+            this.stepToolStripMenuItem1.Click += new System.EventHandler(this.stepToolStripMenuItem1_Click);
             // 
             // Form1
             // 
@@ -228,6 +237,7 @@
         private System.Windows.Forms.ToolStripMenuItem generateCentroidsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem kohonensToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem generateNeuronsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem stepToolStripMenuItem1;
     }
 }
 

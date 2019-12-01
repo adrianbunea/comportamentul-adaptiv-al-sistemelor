@@ -4,6 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Collections.Generic;
+using TestDataGeneration.Kohonen;
 
 namespace TestDataGeneration
 {
@@ -12,7 +13,7 @@ namespace TestDataGeneration
         private List<DataSet> dataSets;
         private List<Point> points;
         private List<Centroid> centroids;
-        private List<List<Point>>neurons;
+        private Neurons neurons;
 
         public Form1()
         {
@@ -185,34 +186,37 @@ namespace TestDataGeneration
 
         private void generateNeuronsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            neurons = new List<List<Point>>();
+            chart.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+            chart.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
+            chart.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
+            chart.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
+            neurons = new Neurons();
+            RedrawNeurons();
+        }
+
+        private void RedrawNeurons()
+        {
             chart.Series.Clear();
-            Point[,] points = new Point[10, 10];
-            for (int x = -5; x < 5; x++)
+            foreach (List<Point> line in neurons.Lines)
             {
-                for (int y = -5; y < 5; y++)
-                {
-                    Point point = new Point(x * 60, y * 60);
-                    points[x + 5, y + 5] = point;
-                }
+                Series series = CreateLineSeries(line);
+                chart.Series.Add(series);
+                series = CreateSeries(line);
+                series.MarkerSize = 10;
+                series.Color = Color.Black;
+                series.MarkerStyle = MarkerStyle.Square;
+                chart.Series.Add(series);
             }
 
-            for (int i = 0; i < 10; i++)
+            foreach (List<Point> column in neurons.Columns)
             {
-                List<Point> neuronLineX = new List<Point>();
-                List<Point> neuronLineY = new List<Point>();
-                for (int j = 0; j < 10; j++)
-                {
-                    neuronLineY.Add(points[i, j]);
-                    neuronLineX.Add(points[j, i]);
-                }
-
-                neurons.Add(neuronLineX);
-                neurons.Add(neuronLineY);
-                Series seriesX = CreateLineSeries(neuronLineX);
-                Series seriesY = CreateLineSeries(neuronLineY);
-                chart.Series.Add(seriesX);
-                chart.Series.Add(seriesY);
+                Series series = CreateLineSeries(column);
+                chart.Series.Add(series);
+                series = CreateSeries(column);
+                series.MarkerSize = 10;
+                series.Color = Color.Black;
+                series.MarkerStyle = MarkerStyle.Square;
+                chart.Series.Add(series);
             }
         }
 
@@ -245,6 +249,12 @@ namespace TestDataGeneration
             series.Points.DataBind(points, "X", "Y", null);
 
             return series;
+        }
+
+        private void stepToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            neurons.SetNeuron(0, 0, new Neuron(-270, -270));
+            RedrawNeurons();
         }
     }
 }
