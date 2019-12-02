@@ -197,6 +197,8 @@ namespace TestDataGeneration
         private void RedrawNeurons()
         {
             chart.Series.Clear();
+            chart.Series.Add(CreateSeries(points));
+
             foreach (List<Point> line in neurons.Lines)
             {
                 Series series = CreateLineSeries(line);
@@ -253,7 +255,7 @@ namespace TestDataGeneration
 
         private void stepToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            neurons.SetNeuron(0, 0, new Neuron(-270, -270));
+            neurons.NextEpoch(points);
             RedrawNeurons();
         }
     }
